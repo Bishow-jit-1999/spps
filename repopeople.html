@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <title>Github Users</title>
+    <link rel="stylesheet" href="repo.css">
+</head>
+<body>
+    <h1>Github Users Information</h1>
+     <section id="show"></section>
+     <div id="box">
+        <button id="load">Load Github Users</button>
+     </div>
+    
+  
+    <script>
+        document.getElementById('load').addEventListener('click',loadusers);
+
+        function loadusers(){
+            var xhr=new XMLHttpRequest();
+            xhr.open('GET','https://api.github.com/users');
+            xhr.onload=function(){
+                if(xhr.status==200){
+                    var people=JSON.parse(xhr.responseText);
+                    var output='';
+                    for(var i=0; i<5; i++){
+                   
+                    output +=
+                    '<div class="contain">'+
+                    '<img src="'+people[i].avatar_url+'"width="150px" height="150px">'+ 
+                    '<ul>'+
+                         '<li>ID:' + people[i].id+'</li>'+
+                         '<li>Login:<a href='+people[i].login+'>'+people[i].login+'</a></li>'+
+                         '<li>Github_url:<a href='+people[i].url+'>'+people[i].url+'</a></li>'+
+                         '<li>Repos_url:<a href='+people[i].repos_url+'>'+people[i].repos_url+'</a></li>'+
+                         '<li>Organization_url:<a href='+people[i].organizations_url+'>'+people[i].organizations_url+'</a></li>'+ 
+                   '</ul>'+
+                         '</div>'+
+                         '<br>';
+
+                         document.getElementById('show').innerHTML=output;
+                        
+                    
+                    }
+                     }
+                    }
+                       
+                xhr.send();
+                }
+    </script>
+</body>
+</html>
